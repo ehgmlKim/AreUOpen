@@ -6,7 +6,7 @@ var map = new naver.maps.Map('map', {
  
 // 가게 정보 배열
 var place = {
-    1: { "title": '제나키친', closeD: "NUll", openH:"11", openM:"0", closeH:"20", closeM:"0", breakOH:"15", breakOM:"0", breakCH:"17", breakCM:"30", latlng: new naver.maps.LatLng(37.6034, 127.04169) },
+    1: { "title": '제나키친', closeD: "Sat", openH:"11", openM:"0", closeH:"20", closeM:"0", breakOH:"15", breakOM:"0", breakCH:"17", breakCM:"30", latlng: new naver.maps.LatLng(37.6034, 127.04169) },
     2: { "title":"조아버거", closeD: "Sun", openH:"11", openM:"0", colseH:"20", colseM:"0", breakOH:"NUll", breakOM:"NUll", breakCH:"NUll", breakCM:"NUll", latlng: new naver.maps.LatLng(37.6039015, 127.0408758) },
     3: { "title": '송송식탁', closeD: "Sun", openH:"11", openM:"0", colseH:"20", colseM:"0", breakOH:"15", breakOM:"0", breakCH:"17", breakCM:"0", latlng: new naver.maps.LatLng(37.6038977, 127.0427576) },
     4: { "title": '스시빈', closeD: "Sun", openH:"11", openM:"30", closeH:"22", closeM:"0", breakOH:"15", breakOM:"0", breakCH:"17", breakCM:"0", latlng: new naver.maps.LatLng(37.60385, 127.0433) },
