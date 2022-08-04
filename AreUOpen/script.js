@@ -2,7 +2,9 @@ var map = new naver.maps.Map('map', { //37.6034, 127.04169
     center: new naver.maps.LatLng(37.6034, 127.04169), //지도 시작 지점
     zoom: 17
 });
-
+// naver.maps.event.addListener(map, 'click', function hideMarkers(mouseEvent) {
+//     setMarkers(null);    
+// }); 
 var markers = new Array(); // 마커 정보를 담는 배열
 var infoWindows = new Array(); // 정보창을 담는 배열
 var positions = new Array();  // 지역을 담는 배열 ( 지역명/위도경도 )
@@ -44,17 +46,42 @@ function getClickHandler(seq) {
 		
     return function(e) {  // 마커를 클릭하는 부분
         var marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
-            infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
-
+        infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
+        
         if (infoWindow.getMap()) {
             infoWindow.close();
+            showMarkers();
         } else {
             infoWindow.open(map, marker); // 표출
+            for(var i=0; i<markers.length;i++){ //클릭한 마커 제외 다 없애기
+                if(seq != i) {
+                    markers[i].setMap(null);
+                }
+            }
+
         }
+        
     }
 }
 
 for (var i=0; i<markers.length; i++) {
     console.log(markers[i] , getClickHandler(i));
     naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
+}
+
+// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+function setMarkers(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }            
+}
+
+// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+function showMarkers() {
+    setMarkers(map)    
+}
+
+// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+function hideMarkers() {
+    setMarkers(null);    
 }
