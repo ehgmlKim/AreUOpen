@@ -14,7 +14,25 @@
           <script type="text/javascript" src="script.js"></script>
         </div>
         <nav>
-          여기에 리모콘
+          <form>
+            요일 
+            <select name="day">
+              <option value="mon"> mon</option>
+              <option value="tue"> tue</option>
+              <option value="wed"> wed</option>
+              <option value="thu"> thu</option>
+              <option value="fri"> fri</option>
+              <option value="sat"> sat</option>
+              <option value="sun"> sun</option>
+            </select>
+            <br/>
+            시
+            <input type="number" min="00" max="24" step="1" value="00" name="hour" >
+            <br/>
+            분 
+            <input type="number" min="00" max=59" step="1" value="00" name="min">
+            <br/>
+          </form>
         </nav>
     </body>
 </html>
