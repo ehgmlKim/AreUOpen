@@ -2,9 +2,6 @@ var map = new naver.maps.Map('map', { //37.6034, 127.04169
     center: new naver.maps.LatLng(37.6034, 127.04169), //지도 시작 지점
     zoom: 17
 });
-// naver.maps.event.addListener(map, 'click', function hideMarkers(mouseEvent) {
-//     setMarkers(null);    
-// }); 
 var markers = new Array(); // 마커 정보를 담는 배열
 var infoWindows = new Array(); // 정보창을 담는 배열
 var positions = new Array();  // 지역을 담는 배열 ( 지역명/위도경도 )
