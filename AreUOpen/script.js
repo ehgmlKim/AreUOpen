@@ -7,7 +7,7 @@ var infoWindows = new Array(); // 정보창을 담는 배열
 var positions = new Array();  // 지역을 담는 배열 ( 지역명/위도경도 )
 
 positions.push(
-//    { "title": '제나키친', foodtype: "한식" , closeD: "Sat", openH:"11", openM:"00", closeH:"20", closeM:"00", breakOH:"15", breakOM:"00", breakCH:"17", breakCM:"30", latlng: new naver.maps.LatLng(37.6034, 127.04169) },
+    //{ "title": '제나키친', foodtype: "한식" , closeD: "Sat", openH:"11", openM:"00", closeH:"20", closeM:"00", breakOH:"15", breakOM:"00", breakCH:"17", breakCM:"30", latlng: new naver.maps.LatLng(37.6034, 127.04169) },
     { "title":"조아버거",  foodtype: "햄버거", closeD: "Sun", openH:"11", openM:"00", closeH:"20", closeM:"00", breakOH:"NUll", breakOM:"NUll", breakCH:"NUll", breakCM:"NUll", latlng: new naver.maps.LatLng(37.6039015, 127.0408758) },
     { "title": '송송식탁', foodtype: "한식",  closeD: "Sun", openH:"11", openM:"00", closeH:"20", closeM:"00", breakOH:"15", breakOM:"00", breakCH:"17", breakCM:"00", latlng: new naver.maps.LatLng(37.6038977, 127.0427576) },
     { "title": '스시빈',  foodtype: "초밥/롤",closeD: "Sun", openH:"11", openM:"30", closeH:"22", closeM:"00", breakOH:"15", breakOM:"00", breakCH:"17", breakCM:"00", latlng: new naver.maps.LatLng(37.60385, 127.0433) },
@@ -31,9 +31,9 @@ for (var i = 0; i < positions.length; i++) {
         /* 정보창 */
         var infoWindow = new naver.maps.InfoWindow({
             content: '<div style="width:200px;text-align:center;padding:10px;"><strong>' + positions[i].title + '</strong><br/>'
-            +positions[i].foodtype + '<br>' 
+            +'<b>'+positions[i].foodtype+'<b>'+ '<br>' 
             +positions[i].openH + ':'+ positions[i].openM + '~'+positions[i].closeH +":" +positions[i].closeM+'</div>'
-        }); // 클릭했을 때 띄워줄 정보 HTML 작성
+           }); // 클릭했을 때 띄워줄 정보 HTML 작성
         
     markers.push(marker); // 생성한 마커를 배열에 담는다.
     infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
@@ -65,6 +65,12 @@ for (var i=0; i<markers.length; i++) {
     console.log(markers[i] , getClickHandler(i));
     naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
 }
+
+              var d = document.getElementById("d");
+              var day = d.options[d.selectedIndex].value;
+            //   document.getElementById("nav").innerHTML = day;
+     document.write(day);
+
 
 // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
 function setMarkers(map) {
@@ -100,3 +106,4 @@ function ChangeValue(){
     }
    }
 }
+
