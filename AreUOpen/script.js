@@ -9,11 +9,11 @@ var positions = new Array();  // 지역을 담는 배열 ( 지역명/위도경�
 positions.push(
     //{ "title": '제나키친', foodtype: "한식" , closeD: "Sat", openH:"11", openM:"00", closeH:"20", closeM:"00", breakOH:"15", breakOM:"00", breakCH:"17", breakCM:"30", latlng: new naver.maps.LatLng(37.6034, 127.04169) },
     { "title":"조아버거",  foodtype: "햄버거", closeD: "Sun", openH:"11", openM:"00", closeH:"20", closeM:"00", break:false, latlng: new naver.maps.LatLng(37.6039015, 127.0408758) },
-    { "title": '송송식탁', foodtype: "한식",  closeD: "Sun", openH:"11", openM:"00", closeH:"20", closeM:"00", break:true, breakOH:"15", breakOM:"00", breakCH:"17", breakCM:"00", latlng: new naver.maps.LatLng(37.6038977, 127.0427576) },
+    { "title": '송송식탁', foodtype: "한식",  closeD: "Sun", openH:"11", openM:"00", closeH:"21", closeM:"00", break:true, breakOH:"15", breakOM:"00", breakCH:"17", breakCM:"00", latlng: new naver.maps.LatLng(37.6038977, 127.0427576) },
     { "title": '스시빈',  foodtype: "초밥/롤",closeD: "Sun", openH:"11", openM:"30", closeH:"22", closeM:"00", break:true, breakOH:"15", breakOM:"00", breakCH:"17", breakCM:"00", latlng: new naver.maps.LatLng(37.60385, 127.0433) },
-    { "title": '백소정',   foodtype: "일식당",closeD:"null", openH:"11", openM:"00", breakOH:"15", breakOM:"00", break:true, breakCH:"17", breakCM:"00" ,closeH:"21", closeM:"00" , latlng: new naver.maps.LatLng(37.6028850, 127.0412987)},
+    { "title": '백소정',   foodtype: "일식당",closeD:"null", openH:"11", openM:"00", break:true, breakOH:"15", breakOM:"00",  breakCH:"17", breakCM:"00" ,closeH:"21", closeM:"00" , latlng: new naver.maps.LatLng(37.6028850, 127.0412987)},
     { "title":"서브웨이",  foodtype: "샌드위치", closeD:"null", openH:"08", openM:"00", break:false ,closeH:"22", closeM:"00" ,latlng: new naver.maps.LatLng(37.60384, 127.04272) },
-    { "title":"밥은화",  foodtype: "한식", closeD:"Sat", openH:"11", openM:"30", breakOH:"null", break:false, closeH:"20", closeM:"30" ,latlng: new naver.maps.LatLng(37.605748, 127.044525) },
+    { "title":"밥은화",  foodtype: "한식", closeD:"Sun", openH:"11", openM:"30", break:false, closeH:"20", closeM:"30" ,latlng: new naver.maps.LatLng(37.605748, 127.044525) },
     { "title":"연이네 과자점",  foodtype: "카페, 디저트", closeD:"Sat", openH:"11", openM:"00", break:false, closeH:"20", closeM:"00" ,latlng: new naver.maps.LatLng(37.603879, 127.041563) }
 //    { "title": '핏짜피자',  foodtype: "피자",closeD: "null", openH:"11", openM:"00", breakOH:"15", breakOM:"30", breakCH:"17", breakCM:"00" ,closeH:"21", closeM:"30" , latlng: new naver.maps.LatLng(37.6037559, 127.0420138) },
 //    { "title": '샐러디',   foodtype: "샐러드", closeD:"null", openH:"08", openM:"30", openH2:"10", openM2:"0", breakOH:"null", breakOM:"null", breakCH:"null" ,breakCM:"null" ,closeH:"21", closeM:"00", closeH2:"2", closeM:"00" , latlng: new naver.maps.LatLng(37.6041401,127.0428911) }
@@ -95,7 +95,7 @@ function ChangeValue(){
    var day = document.getElementById('day');
    var hour = document.getElementById('hour');
    var min = document.getElementById('min');
-   var selectedD = parseInt(day.options[day.selectedIndex].value);
+   var selectedD = day.options[day.selectedIndex].value;
    var selectedH = parseInt(hour.options[hour.selectedIndex].value);
    var selectedM = parseInt(min.options[min.selectedIndex].value);
    for(var i=0;i<positions.length;i++) {
@@ -107,13 +107,33 @@ function ChangeValue(){
         var breakOM = parseInt(positions[i].breakOM);
         var breakCH = parseInt(positions[i].breakCH);
         var breakCM = parseInt(positions[i].breakCM);
-        if( selectedD == positions[i].closeD || //휴무일이랑 같음
-        selectedH < openH || //오픈시간 전
-        (selectedH == openH && selectedM < openM) || //오픈분보다 전
-        selectedH > closeH || //닫는 시간 후
-        (selectedH == closeH && selectedM > closeM)) { //닫는 분 후 
-         markers[i].setMap(null); //안보이게
-        } else{
+        if (selectedD == positions[i].closeD) {
+            //휴무일이랑 같으면
+            markers[i].setMap(null); //안보이게
+        } 
+        //휴무일 아닌 애들
+        else if( selectedH < openH) { 
+            //오픈시간보다 작으면
+            markers[i].setMap(null); //안보이게
+        } else if( selectedH == openH && selectedM < openM ) { 
+            //오픈시간보다 같은데 오픈 분보다 작으면
+            markers[i].setMap(null); //안보이게
+        } else if( selectedH > breakOH && selectedH < breakCH) {
+            //브레이크 시작보다 크고 브레이크 끝보다 작으면
+            markers[i].setMap(null);
+        } else if( selectedH == breakOH && selectedM >= breakOM) {
+            //브레이크 시작이랑 같은데 분이 크면
+            markers[i].setMap(null);
+        } else if( selectedH == breakCH && selectedM < breakCM) {
+            //브레이크 끝이랑 같은데 분이 작으면
+            markers[i].setMap(null);
+        } else if( selectedH > closeH) {
+            //끝나는 시간보다 크면
+            markers[i].setMap(null);  //안보이게
+        } else if( selectedH == closeH && selectedM >= closeM) {
+            //끝나는 시간보다 작거나 같은데 끝나는 분보다 같거나 크면
+            markers[i].setMap(null);  //안보이게
+        } else{ //다 아니면 보이게
             markers[i].setMap(map);
         }
    }
