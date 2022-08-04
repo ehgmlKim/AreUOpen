@@ -30,10 +30,11 @@ for (var i = 0; i < positions.length; i++) {
     /* 정보창 */
     var infoWindow = new naver.maps.InfoWindow({
         content: 
-'       <div style="width:200px;text-align:center;padding:10px;">' +
-'        <h3>' + positions[i].title + '</h3><br>' +
-'        <b>' + positions[i].openH + ':'+ positions[i].openM + '~' + positions[i].closeH + ':' + positions[i].closeM + '</b><br>' +
-'        </div>'
+'       <div style="width:200px;text-align:center;padding:10px;">'
++'           <strong>' + positions[i].title + '</strong> <br>'
++'           <b> '+ positions[i].foodtype + ' </b><br> ' 
++            positions[i].openH + ':'+ positions[i].openM + '~' + positions[i].closeH + ":" + positions[i].closeM 
++'       </div>'
     }); // 클릭했을 때 띄워줄 정보 HTML 작성
     
     markers.push(marker); // 생성한 마커를 배열에 담는다.
