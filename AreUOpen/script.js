@@ -104,6 +104,9 @@ function ChangeValue(){
     if (positions[i].closeD == selectedD) {
         markers[i].setMap(null);
     }
+    else{
+        markers[i].setMap(map);
+    }
    }
 }
 
