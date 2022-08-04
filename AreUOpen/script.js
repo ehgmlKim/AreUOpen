@@ -1,8 +1,7 @@
-var map = new naver.maps.Map('map', {
+var map = new naver.maps.Map('map', { //37.6034, 127.04169
     center: new naver.maps.LatLng(37.6034, 127.04169), //지도 시작 지점
     zoom: 17
 });
-
 var markers = new Array(); // 마커 정보를 담는 배열
 var infoWindows = new Array(); // 정보창을 담는 배열
 var positions = new Array();  // 지역을 담는 배열 ( 지역명/위도경도 )
@@ -14,12 +13,10 @@ positions.push(
     { "title": '스시빈',  foodtype: "초밥/롤",closeD: "Sun", openH:"11", openM:"30", closeH:"22", closeM:"00", breakOH:"15", breakOM:"00", breakCH:"17", breakCM:"00", latlng: new naver.maps.LatLng(37.60385, 127.0433) },
     { "title": '백소정',   foodtype: "일식당",closeD:"null", openH:"11", openM:"00", breakOH:"15", breakOM:"00", breakCH:"17", breakCM:"00" ,closeH:"21", closeM:"00" , latlng: new naver.maps.LatLng(37.6028850, 127.0412987)},
     { "title":"서브웨이",  foodtype: "샌드위치", closeD:"null", openH:"08", openM:"00", breakOH:"null", breakOM:"null", breakCH:"null" ,breakCM:"null" ,closeH:"22", closeM:"00" ,latlng: new naver.maps.LatLng(37.60384, 127.04272) },
-    { "title":"밥은화",  foodtype: "한식", closeD:"Sat", openH:"11", openM:"30", breakOH:"null", breakOM:"null", breakCH:"null" ,breakCM:"null" ,closeH:"20", closeM:"30" ,latlng: new naver.maps.LatLng(37.6057359, 127.044453) },
-    { "title":"연이네 과자점",  foodtype: "카페, 디저트", closeD:"Sat", openH:"11", openM:"00", breakOH:"null", breakOM:"null", breakCH:"null" ,breakCM:"null" ,closeH:"20", closeM:"00" ,latlng: new naver.maps.LatLng(37.6038866, 127.0415479) }
-    //토,일은 브에리크 타임이 없음
-    //{ "title": '핏짜피자',  foodtype: "피자",closeD: "null", openH:"11", openM:"00", breakOH:"15,null", breakOM:"30,null", breakCH:"17,null", breakCM:"00,null" ,closeH:"21", closeM:"30" , latlng: new naver.maps.LatLng(37.6037559, 127.0420138) },
-    //토, 일 영업 시간 다름 (10:00-20:00)
-    //{ "title": '샐러디',   foodtype: "샐러드", closeD:"null", openH:"08", openH2:"10", openM:"30",openM2:"00",  breakOH:"null", breakOM:"null", breakCH:"null" ,breakCM:"null" ,closeH:"21", closeM:"00" ,closeH2:"20", closeM2:"00" , latlng: new naver.maps.LatLng(37.6041401,127.0428911) }
+    { "title":"밥은화",  foodtype: "한식", closeD:"Sat", openH:"11", openM:"30", breakOH:"null", breakOM:"null", breakCH:"null" ,breakCM:"null" ,closeH:"20", closeM:"30" ,latlng: new naver.maps.LatLng(37.605748, 127.044525) },
+    { "title":"연이네 과자점",  foodtype: "카페, 디저트", closeD:"Sat", openH:"11", openM:"00", breakOH:"null", breakOM:"null", breakCH:"null" ,breakCM:"null" ,closeH:"20", closeM:"00" ,latlng: new naver.maps.LatLng(37.603879, 127.041563) }
+//    { "title": '핏짜피자',  foodtype: "피자",closeD: "null", openH:"11", openM:"00", breakOH:"15", breakOM:"30", breakCH:"17", breakCM:"00" ,closeH:"21", closeM:"30" , latlng: new naver.maps.LatLng(37.6037559, 127.0420138) },
+//    { "title": '샐러디',   foodtype: "샐러드", closeD:"null", openH:"08", openM:"30", openH2:"10", openM2:"0", breakOH:"null", breakOM:"null", breakCH:"null" ,breakCM:"null" ,closeH:"21", closeM:"00", closeH2:"2", closeM:"00" , latlng: new naver.maps.LatLng(37.6041401,127.0428911) }
 );
 	
 for (var i = 0; i < positions.length; i++) {
@@ -46,13 +43,21 @@ function getClickHandler(seq) {
 		
     return function(e) {  // 마커를 클릭하는 부분
         var marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
-            infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
-
+        infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
+        
         if (infoWindow.getMap()) {
             infoWindow.close();
+            showMarkers();
         } else {
             infoWindow.open(map, marker); // 표출
+            for(var i=0; i<markers.length;i++){ //클릭한 마커 제외 다 없애기
+                if(seq != i) {
+                    markers[i].setMap(null);
+                }
+            }
+
         }
+        
     }
 }
 
@@ -61,9 +66,44 @@ for (var i=0; i<markers.length; i++) {
     naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
 }
 
-
               var d = document.getElementById("d");
               var day = d.options[d.selectedIndex].value;
             //   document.getElementById("nav").innerHTML = day;
      document.write(day);
+
+
+// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+function setMarkers(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }            
+}
+
+// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+function showMarkers() {
+    setMarkers(map)    
+}
+
+// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+function hideMarkers() {
+    setMarkers(null);    
+}
+
+//오픈한 가게만 보이게 하기
+// function showOpenOnly(){
+//     var day = day.options[day.selectedIndex].value;
+//     for(var i=0;i<positions.length;i++) {
+//         if (positions[i].closeD == day) {
+//             // markers[i].setMap(null);
+            
+
+function ChangeValue(){
+   var day = document.getElementById('day');
+   var selectedD = day.options[day.selectedIndex].value;
+   for(var i=0;i<positions.length;i++) {
+    if (positions[i].closeD == selectedD) {
+        markers[i].setMap(null);
+    }
+   }
+}
 
