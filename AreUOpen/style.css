@@ -3,9 +3,16 @@ html, body {
     height: 100%;
 }
 body #map {
-    width: 100%;
+    width: 90%;
+    height: 100%;
+}
+nav {
+    width: 10%;
     height: 100%;
 }
 b {
     font-size: 5px;
+}
+a{
+    font-size: 10px;
 }
