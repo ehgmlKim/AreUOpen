@@ -82,3 +82,21 @@ function showMarkers() {
 function hideMarkers() {
     setMarkers(null);    
 }
+
+//오픈한 가게만 보이게 하기
+// function showOpenOnly(){
+//     var day = day.options[day.selectedIndex].value;
+//     for(var i=0;i<positions.length;i++) {
+//         if (positions[i].closeD == day) {
+//             // markers[i].setMap(null);
+            
+
+function ChangeValue(){
+   var day = document.getElementById('day');
+   var selectedD = day.options[day.selectedIndex].value;
+   for(var i=0;i<positions.length;i++) {
+    if (positions[i].closeD == selectedD) {
+        markers[i].setMap(null);
+    }
+   }
+}
